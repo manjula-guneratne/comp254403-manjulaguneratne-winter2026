@@ -223,6 +223,30 @@ public class DoublyLinkedList<E> {
     sb.append(")");
     return sb.toString();
   }
+
+  public void concatenate(DoublyLinkedList<E> M){
+    Node<E> firstOfM = M.header.getNext();
+    Node<E> lastOfM = M.trailer.getPrev();
+
+    Node<E> lastOfL = this.trailer.getPrev();
+
+    // Connect end of L to beginning of M
+    lastOfL.setNext(firstOfM);
+    firstOfM.setPrev(lastOfL);
+
+    // Connect end of M to the trailer
+    this.trailer.setPrev(lastOfM);
+    lastOfM.setNext(this.trailer);
+
+    //Size update
+    this.size += M.size;
+
+    // Clear M by reconnecting
+    M.header.setNext(M.trailer);
+    M.trailer.setPrev(M.header);
+    M.size = 0;
+  }
+
 //main method
   public static void main(String[] args)
   {
@@ -232,22 +256,18 @@ public class DoublyLinkedList<E> {
       classlist1.addLast("Alias");
       classlist1.addLast("Bosh");
 	  //
+      System.out.println(classlist1);
+
       DoublyLinkedList<String> classlist2 = new DoublyLinkedList<String>();
       classlist2.addFirst("Melisa");
       classlist2.addLast("Anita");
       classlist2.addLast("Bliss");
 
-	  //
-
-      DoublyLinkedList<String> fullclasslist = new DoublyLinkedList<String>();
-      classlist2.header.getNext().setPrev(classlist1.trailer.getPrev());
-      classlist1.trailer.getPrev().setNext(classlist2.header.getNext());
-      fullclasslist.header = classlist1.header;
-      fullclasslist.trailer = classlist2.trailer;
-      fullclasslist.size = classlist2.size + classlist1.size;
-
-      System.out.println(classlist1);
       System.out.println(classlist2);
-      System.out.println("Concatenated DoublyLinked list: "+fullclasslist);
+
+      // Concatenate classlist1 to classlist2
+      classlist1.concatenate(classlist2);
+
+      System.out.println("After concatenation: "+classlist1);
   }
 } //----------- end of DoublyLinkedList class -----------

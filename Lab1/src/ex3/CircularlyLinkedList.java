@@ -23,6 +23,8 @@
 package ex3;
 
 
+import ex2.SinglyLinkedList;
+
 /**
  * An implementation of a circularly linked list.
  *
@@ -30,7 +32,7 @@ package ex3;
  * @author Roberto Tamassia
  * @author Michael H. Goldwasser
  */
-public class CircularlyLinkedList<E> {
+public class CircularlyLinkedList<E> implements Cloneable {
   //---------------- nested Node class ----------------
   /**
    * Singly linked node, which stores a reference to its element and
@@ -180,6 +182,31 @@ public class CircularlyLinkedList<E> {
     sb.append(")");
     return sb.toString();
   }
+
+  //Clone
+  public CircularlyLinkedList<E> clone() throws CloneNotSupportedException{
+    CircularlyLinkedList<E> cloneOther = (CircularlyLinkedList<E>) super.clone();
+    if(size > 0) {
+      //
+      Node<E> newHead = new Node<E>(tail.getNext().getElement(), null);
+      Node<E> otherTail = newHead;
+
+      Node<E> walk = tail.getNext().getNext();  //starting from the 2nd node
+
+      while (walk != tail.getNext()){  //stop when head is reached
+        Node<E> newest = new Node<>(walk.getElement(), null);
+        otherTail.setNext(newest);     // link previous node to this one
+        otherTail = newest;
+        walk = walk.getNext();
+      }
+      //Close the circle
+      otherTail.setNext(newHead);
+
+      //Connect to actual last node
+      cloneOther.tail = otherTail;
+    }
+      return cloneOther;
+  }
   
 //main method
   public static void main(String[] args)
@@ -193,11 +220,17 @@ public class CircularlyLinkedList<E> {
 	  circularList.addLast("BOS");
 	  //
 	  System.out.println(circularList);
-	  circularList.removeFirst();
-	  System.out.println(circularList);
-	  circularList.rotate();
-	  System.out.println(circularList);
+//	  circularList.removeFirst();
+//	  System.out.println(circularList);
+//	  circularList.rotate();
+//	  System.out.println(circularList);
 
-	  //
+      try{
+        CircularlyLinkedList<String> circularClonedList = circularList.clone();
+        System.out.println("After cloning");
+        System.out.println(circularClonedList);
+      } catch (Exception e){
+        System.out.println(e);
+      }
   }
 }

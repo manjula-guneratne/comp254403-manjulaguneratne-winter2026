@@ -204,6 +204,39 @@ public class SinglyLinkedList<E> implements Cloneable {
     return h;
   }
 
+  public void swapNodes(E x, E y){
+
+    // Setting X values Prev and Current
+    Node prevX = null, currX = this.head;
+    while(currX != null && !currX.getElement().equals(x)){
+      prevX = currX;
+      currX = currX.getNext();
+    }
+
+    // Setting Y values Prev and Current
+    Node prevY = null, currY = this.head;
+    while(currY != null && !currY.getElement().equals(y)){
+      prevY = currY;
+      currY = currY.getNext();
+    }
+
+    //If x is not head
+    if(prevX != null)
+      prevX.setNext(currY);
+    else
+      head = currY;
+
+    //If y is not head
+    if(prevY != null)
+      prevY.setNext(currX);
+    else
+      head = currX;
+
+    // Next pointers
+    Node <E> temp = currX.getNext();
+    currX.setNext(currY.getNext());
+    currY.setNext(temp);
+  }
   /**
    * Produces a string representation of the contents of the list.
    * This exists for debugging purposes only.
@@ -221,18 +254,20 @@ public class SinglyLinkedList<E> implements Cloneable {
     return sb.toString();
   }
   //main method
-  public static void main(String[] args)
-  {
-	  
-	  SinglyLinkedList<String> list = new SinglyLinkedList<String>();
-	  list.addFirst("MSP");
-	  list.addLast("ATL");
-	  list.addLast("BOS");
-	  //
-	  list.addFirst("LAX");
+  public static void main(String[] args) {
+
+      SinglyLinkedList<String> list = new SinglyLinkedList<String>();
+      list.addFirst("MSP");
+      list.addLast("ATL");
+      list.addLast("BOS");
+      //
+      list.addFirst("LAX");
       list.addLast("DFW");
-	  System.out.println(list);
-	  //
+      System.out.println(list);
+      //
+
+      list.swapNodes("MSP","BOS");
+
+       System.out.println(list);
   }
-  
 }

@@ -1,6 +1,6 @@
 package ex1;
 
-public class Solution1 {
+class Solution1 {
 
     public static void sol_A(){
 

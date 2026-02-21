@@ -1,7 +1,6 @@
 package ex1;
 
-public class Solution1 {
-
+public class solution1 {
     public static void sol_A(){
 
         int n = 1000;    //T(n) = 1
@@ -44,7 +43,7 @@ public class Solution1 {
         for (int j=0; j < n; j++) {      //T(n) = n
             double total = 0;            //T(n) = 1
             for (int i=0; i <= j; i++)   //T(n) = n
-            total += x[i];               //T(n) = 1
+                total += x[i];               //T(n) = 1
             a[j] = total / (j+1);        //T(n) = 1
         }
         return a;                        //T(n) = 1
@@ -71,4 +70,5 @@ public class Solution1 {
     public  static  void main(String[] args){
 
     }
+
 }

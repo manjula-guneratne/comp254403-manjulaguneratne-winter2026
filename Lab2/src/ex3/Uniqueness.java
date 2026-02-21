@@ -54,7 +54,7 @@ class Uniqueness {
                 array[i] = i + 1;
             }
 
-            // shuffle array (Fisher–Yates)
+            // shuffle array
             for (int i = array.length - 1; i > 0; i--) {
                 int j = rand.nextInt(i + 1);
                 int temp = array[i];
@@ -107,7 +107,7 @@ class Uniqueness {
                 array[i] = i + 1;
             }
 
-            // shuffle array (Fisher–Yates)
+            // shuffle array
             for (int i = array.length - 1; i > 0; i--) {
                 int j = rand.nextInt(i + 1);
                 int temp = array[i];

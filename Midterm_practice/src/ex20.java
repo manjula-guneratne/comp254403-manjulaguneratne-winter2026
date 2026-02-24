@@ -6,37 +6,34 @@ public class ex20 {
         data = new int[capacity];
     }
 
+    // Queue is full when size equals capacity
     public boolean isFull() {
         return size == data.length;
     }
 
+    // Queue is empty when size is zero
     public boolean isEmpty() {
         return size == 0;
     }
 
     public void enqueue(int x) throws IllegalStateException {
-        if (isFull())
+        if (isFull()) {
             throw new IllegalStateException("Queue is full");
+        }
 
         data[tail] = x;
-
-        // move tail circularly
-        tail = (tail + 1) % data.length;
-
+        tail = (tail + 1) % data.length; // wrap around
         size++;
     }
 
     public int dequeue() throws IllegalStateException {
-        if (isEmpty())
+        if (isEmpty()) {
             throw new IllegalStateException("Queue is empty");
+        }
 
         int value = data[head];
-
-        // move head circularly
-        head = (head + 1) % data.length;
-
+        head = (head + 1) % data.length; // wrap around
         size--;
-
         return value;
     }
 
@@ -50,7 +47,7 @@ public class ex20 {
         System.out.println(q.isFull());  // true
         System.out.println(q.dequeue()); // 1
 
-        q.enqueue(4); // wraps around
+        q.enqueue(4); // wraps to index 0
 
         System.out.println(q.dequeue()); // 2
     }

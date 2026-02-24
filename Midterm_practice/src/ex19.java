@@ -1,32 +1,39 @@
+import java.util.*;
 
 public class ex19 {
 
-    static class Node {
-        int data;
-        Node next;
-        Node(int d){ data=d; }
-    }
+    public static boolean isValid(String s) {
 
-    public static boolean contains(Node head, int key) {
+        Stack<Character> stack = new Stack<>();
 
-        // ----- Base Case 1: reached end of list -----
-        if (head == null)
-            return false;
+        for (char c : s.toCharArray()) {
 
-        // ----- Base Case 2: found the key -----
-        if (head.data == key)
-            return true;
+            // If opening bracket → push
+            if (c == '(' || c == '{' || c == '[') {
+                stack.push(c);
+            }
+            // If closing bracket → must match stack top
+            else {
+                if (stack.isEmpty())
+                    return false;
 
-        // ----- Recursive Case: search the rest -----
-        return contains(head.next, key);
+                char top = stack.pop();
+
+                if ((c == ')' && top != '(') ||
+                        (c == '}' && top != '{') ||
+                        (c == ']' && top != '[')) {
+                    return false;
+                }
+            }
+        }
+
+        // Valid only if nothing left unmatched
+        return stack.isEmpty();
     }
 
     public static void main(String[] args) {
-        Node head = new Node(5);
-        head.next = new Node(3);
-        head.next.next = new Node(9);
-
-        System.out.println(contains(head,3));  // true
-        System.out.println(contains(head,7));  // false
+        System.out.println(isValid("()[]{}"));    // true
+        System.out.println(isValid("([)]"));      // false
+        System.out.println(isValid("{[]}"));      // true
     }
 }

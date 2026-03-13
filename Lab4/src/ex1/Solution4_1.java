@@ -58,7 +58,6 @@ class Solution4_1<E> {
         return newest;
     }
 
-    // --------- REQUIRED METHOD ----------
     public int indexOf(Position<E> p) {
 
         Position<E> current = first();

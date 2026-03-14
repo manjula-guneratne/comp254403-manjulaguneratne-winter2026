@@ -36,61 +36,61 @@ package ex3;
  * @author Michael H. Goldwasser
  */
 public class Solution4_3<E> implements Cloneable {
-    //---------------- nested Node class ----------------
+    //---------------- nested LinkedQueue class ----------------
     /**
-     * Node of a singly linked list, which stores a reference to its
-     * element and to the subsequent node in the list (or null if this
-     * is the last node).
+     * LinkedQueue of a singly linked list, which stores a reference to its
+     * element and to the subsequent LinkedQueue in the list (or null if this
+     * is the last LinkedQueue).
      */
-    private static class Node<E> {
+    private static class LinkedQueue<E> {
 
-        /** The element stored at this node */
-        private E element;            // reference to the element stored at this node
+        /** The element stored at this LinkedQueue */
+        private E element;            // reference to the element stored at this LinkedQueue
 
-        /** A reference to the subsequent node in the list */
-        private Node<E> next;         // reference to the subsequent node in the list
+        /** A reference to the subsequent LinkedQueue in the list */
+        private LinkedQueue<E> next;         // reference to the subsequent LinkedQueue in the list
 
         /**
-         * Creates a node with the given element and next node.
+         * Creates a LinkedQueue with the given element and next LinkedQueue.
          *
          * @param e  the element to be stored
-         * @param n  reference to a node that should follow the new node
+         * @param n  reference to a LinkedQueue that should follow the new LinkedQueue
          */
-        public Node(E e, Node<E> n) {
+        public LinkedQueue(E e, LinkedQueue<E> n) {
             element = e;
             next = n;
         }
 
         // Accessor methods
         /**
-         * Returns the element stored at the node.
-         * @return the element stored at the node
+         * Returns the element stored at the LinkedQueue.
+         * @return the element stored at the LinkedQueue
          */
         public E getElement() { return element; }
 
         /**
-         * Returns the node that follows this one (or null if no such node).
-         * @return the following node
+         * Returns the LinkedQueue that follows this one (or null if no such LinkedQueue).
+         * @return the following LinkedQueue
          */
-        public Node<E> getNext() { return next; }
+        public LinkedQueue<E> getNext() { return next; }
 
         // Modifier methods
         /**
-         * Sets the node's next reference to point to Node n.
-         * @param n    the node that should follow this one
+         * Sets the LinkedQueue's next reference to point to LinkedQueue n.
+         * @param n    the LinkedQueue that should follow this one
          */
-        public void setNext(Node<E> n) { next = n; }
-    } //----------- end of nested Node class -----------
+        public void setNext(LinkedQueue<E> n) { next = n; }
+    } //----------- end of nested LinkedQueue class -----------
 
     // instance variables of the SinglyLinkedList
-    /** The head node of the list */
-    private Node<E> head = null;               // head node of the list (or null if empty)
+    /** The head LinkedQueue of the list */
+    private LinkedQueue<E> head = null;               // head LinkedQueue of the list (or null if empty)
 
-    /** The last node of the list */
-    private Node<E> tail = null;               // last node of the list (or null if empty)
+    /** The last LinkedQueue of the list */
+    private LinkedQueue<E> tail = null;               // last LinkedQueue of the list (or null if empty)
 
-    /** Number of nodes in the list */
-    private int size = 0;                      // number of nodes in the list
+    /** Number of LinkedQueues in the list */
+    private int size = 0;                      // number of LinkedQueues in the list
 
     /** Constructs an initially empty list. */
     public Solution4_3() { }              // constructs an initially empty list
@@ -132,9 +132,9 @@ public class Solution4_3<E> implements Cloneable {
      * @param e  the new element to add
      */
     public void addFirst(E e) {                // adds element e to the front of the list
-        head = new Node<>(e, head);              // create and link a new node
+        head = new LinkedQueue<>(e, head);              // create and link a new LinkedQueue
         if (size == 0)
-            tail = head;                           // special case: new node becomes tail also
+            tail = head;                           // special case: new LinkedQueue becomes tail also
         size++;
     }
 
@@ -143,12 +143,12 @@ public class Solution4_3<E> implements Cloneable {
      * @param e  the new element to add
      */
     public void addLast(E e) {                 // adds element e to the end of the list
-        Node<E> newest = new Node<>(e, null);    // node will eventually be the tail
+        LinkedQueue<E> newest = new LinkedQueue<>(e, null);    // LinkedQueue will eventually be the tail
         if (isEmpty())
             head = newest;                         // special case: previously empty list
         else
-            tail.setNext(newest);                  // new node after existing tail
-        tail = newest;                           // new node becomes the tail
+            tail.setNext(newest);                  // new LinkedQueue after existing tail
+        tail = newest;                           // new LinkedQueue becomes the tail
         size++;
     }
 
@@ -159,7 +159,7 @@ public class Solution4_3<E> implements Cloneable {
     public E removeFirst() {                   // removes and returns the first element
         if (isEmpty()) return null;              // nothing to remove
         E answer = head.getElement();
-        head = head.getNext();                   // will become null if list had only one node
+        head = head.getNext();                   // will become null if list had only one LinkedQueue
         size--;
         if (size == 0)
             tail = null;                           // special case as list is now empty
@@ -172,8 +172,8 @@ public class Solution4_3<E> implements Cloneable {
         if (getClass() != o.getClass()) return false;
         Solution4_3 other = (Solution4_3) o;   // use nonparameterized type
         if (size != other.size) return false;
-        Node walkA = head;                               // traverse the primary list
-        Node walkB = other.head;                         // traverse the secondary list
+        LinkedQueue walkA = head;                               // traverse the primary list
+        LinkedQueue walkB = other.head;                         // traverse the secondary list
         while (walkA != null) {
             if (!walkA.getElement().equals(walkB.getElement())) return false; //mismatch
             walkA = walkA.getNext();
@@ -186,13 +186,13 @@ public class Solution4_3<E> implements Cloneable {
     public Solution4_3<E> clone() throws CloneNotSupportedException {
         // always use inherited Object.clone() to create the initial copy
         Solution4_3<E> other = (Solution4_3<E>) super.clone(); // safe cast
-        if (size > 0) {                    // we need independent chain of nodes
-            other.head = new Node<>(head.getElement(), null);
-            Node<E> walk = head.getNext();      // walk through remainder of original list
-            Node<E> otherTail = other.head;     // remember most recently created node
-            while (walk != null) {              // make a new node storing same element
-                Node<E> newest = new Node<>(walk.getElement(), null);
-                otherTail.setNext(newest);     // link previous node to this one
+        if (size > 0) {                    // we need independent chain of LinkedQueues
+            other.head = new LinkedQueue<>(head.getElement(), null);
+            LinkedQueue<E> walk = head.getNext();      // walk through remainder of original list
+            LinkedQueue<E> otherTail = other.head;     // remember most recently created LinkedQueue
+            while (walk != null) {              // make a new LinkedQueue storing same element
+                LinkedQueue<E> newest = new LinkedQueue<>(walk.getElement(), null);
+                otherTail.setNext(newest);     // link previous LinkedQueue to this one
                 otherTail = newest;
                 walk = walk.getNext();
             }
@@ -202,11 +202,30 @@ public class Solution4_3<E> implements Cloneable {
 
     public int hashCode() {
         int h = 0;
-        for (Node walk=head; walk != null; walk = walk.getNext()) {
+        for (LinkedQueue walk=head; walk != null; walk = walk.getNext()) {
             h ^= walk.getElement().hashCode();      // bitwise exclusive-or with element's code
             h = (h << 5) | (h >>> 27);              // 5-bit cyclic shift of composite code
         }
         return h;
+    }
+
+    public void concatenate(Solution4_3<E> Q2){
+
+        if(Q2.isEmpty()) return;
+
+        if(this.isEmpty()){
+            this.head = Q2.head;
+            this.tail = Q2.tail;
+            this.size = Q2.size;
+        } else {
+            this.tail.setNext(Q2.head);
+            this.tail = Q2.tail;
+            this.size += Q2.size;
+        }
+
+        Q2.head = null;
+        Q2.tail = null;
+        Q2.size = 0;
     }
 
     /**
@@ -215,7 +234,7 @@ public class Solution4_3<E> implements Cloneable {
      */
     public String toString() {
         StringBuilder sb = new StringBuilder("(");
-        Node<E> walk = head;
+        LinkedQueue<E> walk = head;
         while (walk != null) {
             sb.append(walk.getElement());
             if (walk != tail)
@@ -227,11 +246,24 @@ public class Solution4_3<E> implements Cloneable {
     }
 
     public static void main(String[] args){
-        Solution4_3<String> list = new Solution4_3<String>();
-        list.addFirst("MSP");
-        list.addLast("ATL");
-        list.addLast("BOS");
+        Solution4_3<String> Q1 = new Solution4_3<String>();
+        Q1.addFirst("Alan");
+        Q1.addFirst("Bob");
+        Q1.addFirst("Casper");
 
-        System.out.println(list);
+        Solution4_3<String> Q2 = new Solution4_3<String>();
+        Q2.addFirst("Daisy");
+        Q2.addFirst("Ellen");
+        Q2.addFirst("Fazal");
+
+        System.out.println("Before concatenation: ");
+        System.out.println("Q1: " + Q1);
+        System.out.println("Q2: " + Q2);
+
+        Q1.concatenate(Q2);
+
+        System.out.println("After concatenation: ");
+        System.out.println("Q1: " + Q1);
+        System.out.println("Q2: " + Q2);
     }
 }

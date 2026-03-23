@@ -1,4 +1,4 @@
-/*
+package Week8;/*
  * Copyright 2014, Michael T. Goodrich, Roberto Tamassia, Michael H. Goldwasser
  *
  * Developed for use with the book:

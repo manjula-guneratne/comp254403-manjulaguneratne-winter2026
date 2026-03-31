@@ -68,6 +68,15 @@ public class Solution5_2 {
         return height;                                       // 5. return to parent
     }
 
+    /*
+           50
+          /  \
+        30    70
+       / \   / \
+      20 40 60  80
+
+     */
+
         public static void main(String[] args) {
 
         Solution5_2 tree = new Solution5_2();

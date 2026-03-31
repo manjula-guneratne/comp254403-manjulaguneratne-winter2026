@@ -81,11 +81,11 @@ public class Solution5_2 {
         tree.insert(60);
         tree.insert(80);
 
-        System.out.print("Inorder traversal: ");
+        System.out.print("Post-order traversal: ");
         tree.postorder();
         System.out.println("\n");
 
-        System.out.println("=== Exercise 2 — Element + Subtree Height ===");
+        System.out.println("=== Ex2 — Element + Subtree Height ===");
         System.out.println("(printed in postorder — children before parent)\n");
         tree.printHeights();
 
